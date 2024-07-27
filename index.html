@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Visualize Sorting Algorithms</title>
+	</head>
+	<body>
+		<h1>Visualize Sorting Algorithms</h1>
+		<div id="container" class="container fd-col">
+			<div id="options" class="container fd-col">
+				<div class="ai-center m5 container jc-center">
+					<select id="array-size" class="m5">
+						<option selected disabled value>Array Size</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+						<option value="150">150</option>
+						<option value="200">200</option>
+						<option value="250">250</option>
+					</select>
+					<select id="sorting-algo" class="m5">
+						<option selected disabled value>Sorting Algorithm</option>
+					</select>
+          <div class="container fd-col ai-center">
+            <label for="render-delay">Speed: <span id="render-delay-value"></span></label>
+            <input id="render-delay-slider" class="as-center ai-center m5" type="range" />
+          </div>
+				</div>
+        <div class="container jc-center m5">
+          <button id="generate-array" class="as-center control-button" disabled>Generate Array</button>
+          <button class="as-center control-button" id="sort-array" disabled>Sort</button>
+        </div>
+			</div>
+			<div id="bars" class="container jc-center ai-flex-end mt10"></div>
+		</div>
+    <script src="beep.js"></script>
+    <script src="algorithms.js"></script>
+		<script src="script.js"></script>
+	</body>
+</html>

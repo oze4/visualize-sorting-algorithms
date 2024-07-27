@@ -1,0 +1,84 @@
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+}
+
+.fd-col {
+  flex-direction: column;
+}
+
+.fd-row {
+  flex-direction: row;
+}
+
+.jc-center {
+  justify-content: center;
+}
+
+.ai-flex-end {
+  align-items: flex-end;
+}
+
+.ai-center {
+  align-items: center;
+}
+
+/* 'as' stands for align-self */
+.as-center {
+  align-self: center;
+}
+
+.m5 > * {
+  margin: 5px;
+}
+
+.mt10 {
+  margin-top: 10px;
+}
+
+.bar {
+  width: 10px;
+  background-color: black;
+  margin: 1px;
+}
+
+.control-button {
+  width: 150px;
+  height: 50px;
+}
+
+/**
+ * CSS BY TAG
+ */
+
+button, select {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/**
+ * CSS BY ID
+ */
+
+#options {
+  height: 100%;
+  width: 100%;
+}
+
+#bars {
+  height: 80vh;
+  width: 100%;
+}
+
+#container {
+  height: 100%;
+  width: 100%;
+}
