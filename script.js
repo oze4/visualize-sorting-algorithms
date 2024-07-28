@@ -1,7 +1,28 @@
-const MIN_SPEED = 10; // ms
-const MAX_SPEED = 1000; // ms
-const DEFAULT_SPEED = 50; //
+/**
+ * Globals and constants
+ */
 
+// Global array to hold elements
+let ARRAY = [];
+
+const MIN_SPEED = 1; // ms
+const MAX_SPEED = 1000; // ms
+const DEFAULT_SPEED = 10; // ms
+
+const AVAILABLE_SORTING_ALGORITHMS = {
+  "Merge Sort": {
+    sort: mergeSort,
+    render: renderMergeSort,
+  },
+  "Bubble Sort": {
+    sort: bubbleSort,
+    render: renderBubbleSort
+  }
+}
+
+/**
+ * Select necessary DOM elements.
+ */
 const buttonGenerateArray = document.getElementById("generate-array");
 const buttonSortArray = document.getElementById("sort-array");
 const selectArraySize = document.getElementById("array-size");
@@ -10,17 +31,19 @@ const divRenderBars = document.getElementById("bars");
 const sliderRenderDelayInput = document.getElementById("render-delay-slider");
 const sliderRenderDelayValueDisplay = document.getElementById("render-delay-value");
 
+/**
+ * Setup selected DOM elements, if needed.
+ */
 sliderRenderDelayInput.min = MIN_SPEED;
 sliderRenderDelayInput.max = MAX_SPEED;
-sliderRenderDelayInput.value = DEFAULT_SPEED;
+sliderRenderDelayInput.dataset.value = DEFAULT_SPEED;
+sliderRenderDelayInput.value = MAX_SPEED-DEFAULT_SPEED;
 sliderRenderDelayValueDisplay.innerHTML = `${DEFAULT_SPEED}ms`;
 
 // Add available algos to select
 for (const algo of Object.keys(AVAILABLE_SORTING_ALGORITHMS)) {
   selectAlgo.add(new Option(algo, algo));
 }
-
-let ARRAY = [];
 
 /**
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -81,7 +104,9 @@ selectAlgo.addEventListener("change", (event) => {
  * Handle delay slider change
  */
 sliderRenderDelayInput.addEventListener('input', (event) => {
-  sliderRenderDelayValueDisplay.innerHTML = `${event.target.value}ms`;
+  const value = MAX_SPEED-(event.target.value)+1;
+  sliderRenderDelayValueDisplay.innerHTML = `${value}ms`;
+  sliderRenderDelayInput.dataset.value = value
 });
 
 /**

@@ -13,10 +13,12 @@ class Beep {
   playNote(frequency, duration) {
     const oscillator = this.audioContext.createOscillator();
     const volume = this.audioContext.createGain();
+    duration = Math.max(duration, 0.03);
+    /*
     const compressor = this.audioContext.createDynamicsCompressor();
 
     oscillator.frequency.value = frequency;
-    //oscillator.type = "sine";
+    oscillator.type = "sine";
     volume.gain.value = 0.1;
 
     oscillator.connect(volume).connect(compressor).connect(this.audioContext.destination);
@@ -24,20 +26,17 @@ class Beep {
     // Ramp up
     volume.gain.exponentialRampToValueAtTime(volume.gain.value, this.audioContext.currentTime+duration);
     // Ramp down
-    volume.gain.exponentialRampToValueAtTime(0.0001, this.audioContext.currentTime+duration+0.1);
+    volume.gain.exponentialRampToValueAtTime(0.0001, this.audioContext.currentTime+decay);
 
     oscillator.start(this.audioContext.currentTime);
-    oscillator.stop(this.audioContext.currentTime+0.1+duration);
-
-    /*
-    oscillator.frequency.value = frequency;
-    oscillator.start();
-    oscillator.stop(this.audioContext.currentTime+duration);
-    gainNode.gain.value = 0.05;
-    gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime+duration);
-
-    oscillator.connect(gainNode);
-    gainNode.connect(this.audioContext.destination);
+    oscillator.stop(this.audioContext.currentTime+decay+duration);
     */
+    oscillator.frequency.value = frequency;
+    volume.gain.value = 0.01;
+    volume.gain.exponentialRampToValueAtTime(volume.gain.value, this.audioContext.currentTime+duration);
+    volume.gain.exponentialRampToValueAtTime(0.0001, this.audioContext.currentTime+0.3);
+    oscillator.connect(volume).connect(this.audioContext.destination);
+    oscillator.start();
+    oscillator.stop(this.audioContext.currentTime+duration+0.01);
   }
 }

@@ -23,8 +23,12 @@
 						<option selected disabled value>Sorting Algorithm</option>
 					</select>
           <div class="container fd-col ai-center">
-            <label for="render-delay">Speed: <span id="render-delay-value"></span></label>
-            <input id="render-delay-slider" class="as-center ai-center m5" type="range" />
+            <label for="render-delay">Render Delay: <span id="render-delay-value"></span></label>
+            <div class="container fd-row">
+              <span><small>slower</small></span>
+              <input id="render-delay-slider" class="as-center ai-center m5" type="range" />
+              <span><small>faster</small></span>
+            </div>
           </div>
 				</div>
         <div class="container jc-center m5">
@@ -34,8 +38,10 @@
 			</div>
 			<div id="bars" class="container jc-center ai-flex-end mt10"></div>
 		</div>
-    <script src="beep.js"></script>
-    <script src="algorithms.js"></script>
+    <!--<script src="beep.js"></script>-->
+    <script src="animation.js"></script>
+    <script src="bubbleSort.js"></script>
+    <script src="mergeSort.js"></script>
 		<script src="script.js"></script>
 	</body>
 </html>
