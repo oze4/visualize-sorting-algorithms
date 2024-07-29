@@ -60,17 +60,31 @@ button, select {
   cursor: pointer;
 }
 
-button:disabled {
+button:disabled,select:disabled {
   cursor: not-allowed;
+}
+
+input[type=range] {
+  cursor: pointer;
 }
 
 /**
  * CSS BY ID
  */
 
+#slider-container {
+  padding: 3px;
+  border: 1px solid black;
+}
+
+#icon-github {
+  height: 20px;
+  width: 20px;
+}
+
 #options {
   height: 100%;
-  width: 100%;
+  width: 50%;
 }
 
 #bars {

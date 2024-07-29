@@ -4,11 +4,14 @@
 
 // Global arrays to hold elements and generators (animations).
 let ARRAY = [];
+/**
+ * @type {Generator[]}
+ */
 let ANIMATIONS = [];
 
 const MIN_SPEED = 1; // ms
 const MAX_SPEED = 1000; // ms
-const DEFAULT_SPEED = 10; // ms
+const DEFAULT_SPEED = 1; // ms
 const BAR_COLORS = {
   default: "black",
   compare: "yellow",
@@ -25,6 +28,10 @@ const AVAILABLE_SORTING_ALGORITHMS = {
   "Bubble Sort": {
     sort: bubbleSort,
     render: renderBubbleSort
+  },
+  "Quick Sort": {
+    sort: quickSort,
+    render: renderQuickSort,
   }
 }
 
@@ -64,10 +71,12 @@ for (const algo of Object.keys(AVAILABLE_SORTING_ALGORITHMS)) {
  * Handle sort array button click.
  */
 buttonSortArray.addEventListener("click", async (event) => {
-  // Disable sort and generate buttons while we are currently sorting.
+  // Disable controls while sorting.
   buttonSortArray.disabled = true;
   buttonGenerateArray.disabled = true;
-  // Enable stop button
+  selectAlgo.disabled = true;
+  selectArraySize.disabled = true;
+  // Enable stop button while sorting
   buttonStopSorting.disabled = false;
 
   // Get the algo that is selected.
@@ -75,10 +84,12 @@ buttonSortArray.addEventListener("click", async (event) => {
   ANIMATIONS = chosenSortingAlgo.sort(ARRAY);
 	await chosenSortingAlgo.render(ANIMATIONS);
 
-  // Enable sort/generate buttons
+  // Enable controls after sorting
   buttonSortArray.disabled = false;
   buttonGenerateArray.disabled = false;
-  // Disable stop button
+  selectAlgo.disabled = false;
+  selectArraySize.disabled = false;
+  // Disable stop button after sorting
   buttonStopSorting.disabled = true;
 });
 
@@ -117,10 +128,8 @@ selectArraySize.addEventListener("change", (event) => {
  * Handle algorithm selection.
  */
 selectAlgo.addEventListener("change", (event) => {
-  // If sort button is enabled, disable it until a new array is generated.
-  if (!buttonSortArray.disabled) {
-    buttonSortArray.disabled = true;
-  }
+  // If array is generated, enable sort button, else disable.
+  buttonSortArray.disabled = !(ARRAY.length);
 	if (selectArraySize.value) {
 		buttonGenerateArray.disabled = false;
 	}
