@@ -20,24 +20,25 @@ function* bubbleSort(array=[]) {
 
 async function renderBubbleSort(animations) {
   for (const { type, greater, lesser } of animations) {
-    greater.element.style.backgroundColor = 'green'; 
-    lesser.element.style.backgroundColor = 'red'; 
+    greater.element.style.backgroundColor = BAR_COLORS.compare;
+    lesser.element.style.backgroundColor = BAR_COLORS.compare; 
 
     await sleep(sliderRenderDelayInput.dataset.value / 2);
     
     if (type === "swap") {
+      greater.element.style.backgroundColor = BAR_COLORS.correct; 
+      lesser.element.style.backgroundColor = BAR_COLORS.incorrect; 
       [ARRAY[greater.index], ARRAY[lesser.index]] = [ARRAY[lesser.index], ARRAY[greater.index]];
       await renderBars(ARRAY, divRenderBars);
+    } else {
+      greater.element.style.backgroundColor = BAR_COLORS.correct; 
+      lesser.element.style.backgroundColor = BAR_COLORS.correct;  
     }
-
-    await sleep(sliderRenderDelayInput.dataset.value / 2);
     
-    lesser.element.style.backgroundColor = "black";
-    // Completed elements will be blue
-    greater.element.style.backgroundColor = "blue"
+    await sleep(sliderRenderDelayInput.dataset.value / 2);
+    lesser.element.style.backgroundColor = BAR_COLORS.default;
+    greater.element.style.backgroundColor = BAR_COLORS.completed;
   }
 
-  ARRAY[0].style.backgroundColor = "blue";
-  // Enable sort button once sorting has finished.
-  buttonSortArray.disabled = false;
+  ARRAY[0].style.backgroundColor = BAR_COLORS.completed;
 }

@@ -1,49 +1,57 @@
-function mergeSort(array) {
-  
+function* mergeSort(array) {
+  yield* mergePartition(0, array.length - 1);
 }
 
-function renderMergeSort(animations) {
+function* merge(start, mid, end) {
+  let backgroundColor = (start === 0 && end === ARRAY.length - 1) ? BAR_COLORS.completed : BAR_COLORS.correct;
+	let p = start;
+	let q = mid + 1;
+  let arr = [];
 
+	for (let i = start; i <= end; i++) {
+		if (p > mid) {
+      arr.push(ARRAY[q].cloneNode());
+			yield { type: "backgroundColor", value: BAR_COLORS.incorrect, index: q };
+			q++;
+		} else if (q > end || (Number(ARRAY[p].dataset.value) < Number(ARRAY[q].dataset.value))) {
+      arr.push(ARRAY[p].cloneNode());
+			yield { type: "backgroundColor", value: BAR_COLORS.incorrect, index: p };
+			p++;
+		} else {
+			arr.push(ARRAY[q].cloneNode());
+			yield { type: "backgroundColor", value: BAR_COLORS.incorrect, index: q };
+			q++;
+		}
+	}
+
+  for (let i = 0; i < arr.length; i++) {
+    ARRAY[start] = arr[i];
+    yield { type: "backgroundColor", index: start, value: backgroundColor };
+    yield { type: "height", index: start, value: arr[i].style.height }
+    start++;
+  }
 }
 
-/*
-function mergeSort(array) {
-  if (array.length === 1) {
-    return array;
-  }
-
-  let mid = Math.floor(array.length / 2);
-
-  let leftArr = [];
-  for (let i = 0; i < mid; i++) {
-    leftArr.push({ element: array[i], originalIndex: i });
-  }
-
-  let rightArr = [];
-  for (let i = mid; i < array.length; i++) {
-    rightArr.push({ element: array[i], originalIndex: i });
-  }
-
-  let left = mergeSort(leftArr);
-  let right = mergeSort(rightArr);
-  return merge(left, right);
+function* mergePartition(start, end) {
+	if (start < end) {
+		const mid = Math.floor((start + end) / 2);
+		yield { type: "backgroundColor", value: BAR_COLORS.compare, index: mid };
+		yield* mergePartition(start, mid);
+		yield* mergePartition(mid + 1, end);
+		yield* merge(start, mid, end);
+	}
 }
 
-function merge(left, right) {
-  let sortedArr = [];
-  while (left.length && right.length) {
-    if (left[0] < right[0]) {
-      sortedArr.push(left.shift());
-    } else {
-      sortedArr.push(right.shift());
-    }
+async function renderMergeSort(animations) {
+  let next = animations.next();
+  if (next.done) {
+    //buttonSortArray.disabled = false;
+    return;
   }
-  while (left.length) {
-    sortedArr.push(left.shift());
-  }
-  while (right.length) {
-    sortedArr.push(right.shift());
-  }
-  return sortedArr;
+
+  const { type, value, index } = next.value;
+  divRenderBars.childNodes[index].style[type] = value;
+  await sleep(sliderRenderDelayInput.dataset.value);
+
+  await renderMergeSort(animations);
 }
-*/

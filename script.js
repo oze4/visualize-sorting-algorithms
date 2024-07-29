@@ -8,6 +8,13 @@ let ARRAY = [];
 const MIN_SPEED = 1; // ms
 const MAX_SPEED = 1000; // ms
 const DEFAULT_SPEED = 10; // ms
+const BAR_COLORS = {
+  default: "black",
+  compare: "yellow",
+  correct: "green",
+  incorrect: "red",
+  completed: "blue"
+}
 
 const AVAILABLE_SORTING_ALGORITHMS = {
   "Merge Sort": {
@@ -57,10 +64,13 @@ for (const algo of Object.keys(AVAILABLE_SORTING_ALGORITHMS)) {
 buttonSortArray.addEventListener("click", async (event) => {
   // Disable sort button while we are currently sorting.
   buttonSortArray.disabled = true;
+  buttonGenerateArray.disabled = true;
   // Get the algo that is selected.
   const chosenSortingAlgo = AVAILABLE_SORTING_ALGORITHMS[selectAlgo.value];
   const animations = chosenSortingAlgo.sort(ARRAY);
 	await chosenSortingAlgo.render(animations);
+  buttonSortArray.disabled = false;
+  buttonGenerateArray.disabled = false;
 });
 
 /**
@@ -128,8 +138,9 @@ function newBar(index, classes=[]) {
   const bar = document.createElement("div");
   const value = Math.random();
   bar.dataset.value = value;
+  bar.dataset.index = index;
   bar.id = `${index}-${value}`;
-  bar.style.backgroundColor = "black";
+  bar.style.backgroundColor = BAR_COLORS.default;
   bar.style.height = `${value*100}%`;
   bar.classList = classes;
   return bar;
@@ -140,17 +151,17 @@ function newBar(index, classes=[]) {
  * @param {HTMLElement[]} array : Array of Bar where each Bar.value is < 1.
  * @param {HTMLElement} appendToElement
  */
-function renderBars(array, appendToElement) {
+function renderBars(array, appendToElement, sleepMS=0) {
 	return new Promise((resolve, reject) => {
 		if (!array.length) {
-			reject();
+      reject();
 		}
 
-		appendToElement.innerHTML = "";
-		for (let i = 0; i < array.length; i++) {
-			appendToElement.appendChild(array[i]);
-		}
-
+    appendToElement.innerHTML = "";
+    for (let i = 0; i < array.length; i++) {
+      appendToElement.appendChild(array[i]);
+    }
+    
     resolve();
 	});
 }
@@ -176,6 +187,8 @@ function shuffleArray(array) {
 	const LEN = array.length;
 	for (let i = 0; i < LEN; i++) {
 		const randomIndex = Math.floor(Math.random() * LEN);
+    array[i].dataset.index = randomIndex;
+    array[randomIndex].dataset.index = i;
 		[array[i], array[randomIndex]] = [array[randomIndex], array[i]];
 	}
 }
