@@ -45,7 +45,6 @@ function* mergePartition(start, end) {
 async function renderMergeSort(animations) {
   let next = animations.next();
   if (next.done) {
-    //buttonSortArray.disabled = false;
     return;
   }
 

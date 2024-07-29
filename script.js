@@ -2,8 +2,9 @@
  * Globals and constants
  */
 
-// Global array to hold elements
+// Global arrays to hold elements and generators (animations).
 let ARRAY = [];
+let ANIMATIONS = [];
 
 const MIN_SPEED = 1; // ms
 const MAX_SPEED = 1000; // ms
@@ -32,6 +33,7 @@ const AVAILABLE_SORTING_ALGORITHMS = {
  */
 const buttonGenerateArray = document.getElementById("generate-array");
 const buttonSortArray = document.getElementById("sort-array");
+const buttonStopSorting = document.getElementById("stop-sorting");
 const selectArraySize = document.getElementById("array-size");
 const selectAlgo = document.getElementById("sorting-algo");
 const divRenderBars = document.getElementById("bars");
@@ -62,15 +64,32 @@ for (const algo of Object.keys(AVAILABLE_SORTING_ALGORITHMS)) {
  * Handle sort array button click.
  */
 buttonSortArray.addEventListener("click", async (event) => {
-  // Disable sort button while we are currently sorting.
+  // Disable sort and generate buttons while we are currently sorting.
   buttonSortArray.disabled = true;
   buttonGenerateArray.disabled = true;
+  // Enable stop button
+  buttonStopSorting.disabled = false;
+
   // Get the algo that is selected.
   const chosenSortingAlgo = AVAILABLE_SORTING_ALGORITHMS[selectAlgo.value];
-  const animations = chosenSortingAlgo.sort(ARRAY);
-	await chosenSortingAlgo.render(animations);
+  ANIMATIONS = chosenSortingAlgo.sort(ARRAY);
+	await chosenSortingAlgo.render(ANIMATIONS);
+
+  // Enable sort/generate buttons
   buttonSortArray.disabled = false;
   buttonGenerateArray.disabled = false;
+  // Disable stop button
+  buttonStopSorting.disabled = true;
+});
+
+/**
+ * Handle stop button click.
+ * We replace ANIMATIONS with a fake generator.
+ */
+buttonStopSorting.addEventListener("click", (event) => {
+  ANIMATIONS.return("stopped");
+  const e = new MouseEvent("click");
+  buttonGenerateArray.dispatchEvent(e);
 });
 
 /**
@@ -86,15 +105,12 @@ buttonGenerateArray.addEventListener("click", async (event) => {
  * Handle array size selection.
  */
 selectArraySize.addEventListener("change", (event) => {
-  // If sort button is enabled, disable it until a new array is generated.
-  if (!buttonSortArray.disabled) {
-    buttonSortArray.disabled = true;
-  }
+  buttonSortArray.disabled = true;
 	if (selectAlgo.value) {
 		buttonGenerateArray.disabled = false;
 	}
   divRenderBars.innerHTML = "";
-  ARRAY = [];
+  buttonGenerateArray.click();
 });
 
 /**
