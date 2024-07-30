@@ -1,6 +1,14 @@
-# visualize-sorting-algorithms
+### Visualize Sorting Algorithms in JavaScript!
+
+Check out a [live demo here](https://oze4.github.io/visualize-sorting-algorithms/)!
+
+#### About
 
 We use generator functions to update the DOM while sorting.
+
+#### Colors
+
+We [mostly] follow this color convention:
 
 - Default colored `black`.
 - Comparing colored `yellow`.
