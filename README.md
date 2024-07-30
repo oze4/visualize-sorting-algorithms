@@ -2,11 +2,11 @@
 
 Check out a [live demo here](https://oze4.github.io/visualize-sorting-algorithms/)!
 
-#### About
+### About
 
 We use generator functions to update the DOM while sorting.
 
-#### Colors
+### Colors
 
 We [mostly] follow this color convention:
 
