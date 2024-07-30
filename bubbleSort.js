@@ -23,7 +23,7 @@ async function renderBubbleSort(animations) {
     greater.element.style.backgroundColor = BAR_COLORS.compare;
     lesser.element.style.backgroundColor = BAR_COLORS.compare; 
 
-    await sleep(sliderRenderDelayInput.dataset.value / 2);
+    await sleep(sliderSpeed.dataset.value / 2);
     
     if (type === "swap") {
       greater.element.style.backgroundColor = BAR_COLORS.correct; 
@@ -35,7 +35,7 @@ async function renderBubbleSort(animations) {
       lesser.element.style.backgroundColor = BAR_COLORS.correct;  
     }
     
-    await sleep(sliderRenderDelayInput.dataset.value / 2);
+    await sleep(sliderSpeed.dataset.value / 2);
     lesser.element.style.backgroundColor = BAR_COLORS.default;
     greater.element.style.backgroundColor = BAR_COLORS.completed;
   }

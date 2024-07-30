@@ -75,6 +75,7 @@ input[type=range] {
 #slider-container {
   padding: 3px;
   border: 1px solid black;
+  border-radius: 5px;
 }
 
 #icon-github {

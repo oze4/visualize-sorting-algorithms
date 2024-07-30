@@ -32,6 +32,10 @@ const AVAILABLE_SORTING_ALGORITHMS = {
   "Quick Sort": {
     sort: quickSort,
     render: renderQuickSort,
+  },
+  "Cocktail Shaker Sort": {
+    sort: cocktailShakerSort,
+    render: renderCocktailShakerSort,
   }
 }
 
@@ -44,17 +48,15 @@ const buttonStopSorting = document.getElementById("stop-sorting");
 const selectArraySize = document.getElementById("array-size");
 const selectAlgo = document.getElementById("sorting-algo");
 const divRenderBars = document.getElementById("bars");
-const sliderRenderDelayInput = document.getElementById("render-delay-slider");
-const sliderRenderDelayValueDisplay = document.getElementById("render-delay-value");
+const sliderSpeed = document.getElementById("algo-speed");
 
 /**
  * Setup selected DOM elements, if needed.
  */
-sliderRenderDelayInput.min = MIN_SPEED;
-sliderRenderDelayInput.max = MAX_SPEED;
-sliderRenderDelayInput.dataset.value = DEFAULT_SPEED;
-sliderRenderDelayInput.value = MAX_SPEED-DEFAULT_SPEED;
-sliderRenderDelayValueDisplay.innerHTML = `${DEFAULT_SPEED}ms`;
+sliderSpeed.min = MIN_SPEED;
+sliderSpeed.max = MAX_SPEED;
+sliderSpeed.dataset.value = DEFAULT_SPEED;
+sliderSpeed.value = MAX_SPEED-DEFAULT_SPEED;
 
 // Add available algos to select
 for (const algo of Object.keys(AVAILABLE_SORTING_ALGORITHMS)) {
@@ -138,10 +140,9 @@ selectAlgo.addEventListener("change", (event) => {
 /**
  * Handle delay slider change
  */
-sliderRenderDelayInput.addEventListener('input', (event) => {
+sliderSpeed.addEventListener('input', (event) => {
   const value = MAX_SPEED-(event.target.value)+1;
-  sliderRenderDelayValueDisplay.innerHTML = `${value}ms`;
-  sliderRenderDelayInput.dataset.value = value
+  sliderSpeed.dataset.value = value
 });
 
 /**

@@ -49,7 +49,7 @@ async function renderQuickSort(animations) {
       const { index, value } = animation;
       if (index < divRenderBars.childElementCount) {
         divRenderBars.childNodes[index].style.backgroundColor = value;
-        await sleep(sliderRenderDelayInput.dataset.value);
+        await sleep(sliderSpeed.dataset.value);
       }
     }
     if (animation.type === "swap") {
@@ -57,12 +57,12 @@ async function renderQuickSort(animations) {
       const temp = divRenderBars.childNodes[leftIndex].style.height;
       divRenderBars.childNodes[leftIndex].style.height = divRenderBars.childNodes[rightIndex].style.height;
       divRenderBars.childNodes[rightIndex].style.height = temp;
-      await sleep(sliderRenderDelayInput.dataset.value);
+      await sleep(sliderSpeed.dataset.value);
     }
     if (animation.type === "sleep") {
       let v = animation.value;
       if (!animation.value) {
-        v = sliderRenderDelayInput.dataset.value;
+        v = sliderSpeed.dataset.value;
       }
       await sleep(v);
     }

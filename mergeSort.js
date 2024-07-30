@@ -50,7 +50,7 @@ async function renderMergeSort(animations) {
 
   const { type, value, index } = next.value;
   divRenderBars.childNodes[index].style[type] = value;
-  await sleep(sliderRenderDelayInput.dataset.value);
+  await sleep(sliderSpeed.dataset.value);
 
   await renderMergeSort(animations);
 }
