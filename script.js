@@ -151,6 +151,10 @@ sliderSpeed.addEventListener('input', (event) => {
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
+function setBarWidth(arraySize) {
+  //if ()
+}
+
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }

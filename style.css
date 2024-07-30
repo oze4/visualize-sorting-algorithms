@@ -1,11 +1,13 @@
-body {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
 .container {
   display: flex;
+}
+
+.flex {
+  display: flex;
+}
+
+.mb2 {
+  margin-bottom: 2px;
 }
 
 .fd-col {
@@ -24,13 +26,45 @@ body {
   align-items: flex-end;
 }
 
+.fw-wrap {
+  flex-wrap: wrap;
+}
+
+.fw-nowrap {
+  flex-wrap:nowrap;
+}
+
 .ai-center {
   align-items: center;
+}
+
+.fb-100 {
+  flex-basis: 100%;
+}
+
+/* FLEX GROW */
+.fg-1 {
+  flex-grow: 1;
+}
+.fg-5 {
+  flex-grow: 5;
+}
+/* FLEX SHRINK */
+.fs-1 {
+  flex-shrink: 1;
+}
+
+.mw-80 {
+  max-width: 80vw;
 }
 
 /* 'as' stands for align-self */
 .as-center {
   align-self: center;
+}
+
+.ta-center {
+  text-align: center;
 }
 
 .m5 > * {
@@ -42,7 +76,7 @@ body {
 }
 
 .bar {
-  width: 10px;
+  width: 1.75vw;
   background-color: black;
   margin: 1px;
 }
@@ -72,6 +106,10 @@ input[type=range] {
  * CSS BY ID
  */
 
+#header-container {
+  margin-bottom: 1vh;
+}
+
 #slider-container {
   padding: 3px;
   border: 1px solid black;
@@ -85,15 +123,17 @@ input[type=range] {
 
 #options {
   height: 100%;
-  width: 50%;
+  /*width: 50%;*/
 }
 
 #bars {
-  height: 70vh;
+  height: 65vh;
   width: 100%;
 }
 
 #container {
   height: 100%;
-  width: 100%;
+  /*width: 100%;*/
 }
+
+/* MEDIA QUERIES */
