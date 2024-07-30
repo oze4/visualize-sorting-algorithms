@@ -1,3 +1,10 @@
+html,body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
 .container {
   display: flex;
 }
@@ -49,6 +56,9 @@
 .fg-5 {
   flex-grow: 5;
 }
+.fg-100 {
+  flex-grow: 100;
+}
 /* FLEX SHRINK */
 .fs-1 {
   flex-shrink: 1;
@@ -75,8 +85,12 @@
   margin-top: 10px;
 }
 
+.w100 {
+  width: 100%;
+}
+
 .bar {
-  width: 1.75vw;
+  width: 10vw;
   background-color: black;
   margin: 1px;
 }
@@ -121,13 +135,13 @@ input[type=range] {
   width: 20px;
 }
 
-#options {
-  height: 100%;
-  /*width: 50%;*/
+#bars {
+  height: 90%;
+  width: 90%;
 }
 
-#bars {
-  height: 65vh;
+#bars-container {
+  height: 100%;
   width: 100%;
 }
 
@@ -137,3 +151,15 @@ input[type=range] {
 }
 
 /* MEDIA QUERIES */
+
+@media screen and (max-width: 440px) {
+  .fg-1 {
+    width: 100%;
+  }
+  #bars {
+    width: 98%;
+  }
+  .control-button {
+    height: 25px;
+  }
+}

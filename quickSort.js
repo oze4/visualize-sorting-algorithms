@@ -40,6 +40,10 @@ function* sort(start, end) {
     const pivot = yield* quickPartition(start, end);
     yield* sort(start, pivot-1);
     yield* sort(pivot+1, end);
+    // done with these bars, color bars as completed
+    for (let i = 0; i <= end; i++) {
+      divRenderBars.childNodes[i].style.backgroundColor = BAR_COLORS.completed;
+    }
   }
 }
 

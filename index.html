@@ -7,7 +7,7 @@
 		<title>Visualize Sorting Algorithms</title>
 	</head>
 	<body>
-		<div id="container" class="container fw-wrap fd-col ai-center jc-center ta-center">
+		<div id="container" class="container fd-col ai-center ta-center">
 			<div id="header-container" class="mb2">
 				<h1 class="mb2">Visualize Sorting Algorithms</h1>
 				<div id="social-icons" class="container jc-center">
@@ -36,19 +36,22 @@
 				<select id="sorting-algo" class="fg-1">
 					<option selected disabled value>Sorting Algorithm</option>
 				</select>
-				<div id="slider-container" class="container ta-center fd-col fg-1">
+				<div id="slider-container" class="container ai-center ta-center fd-col fg-1">
 					<label for="algo-speed">Speed</label>
-					<input id="algo-speed" class="as-center ai-center m5" type="range" />
+					<div class="container fd-row ai-center jc-center fg-1 w100">
+						<input id="algo-speed" class="as-center ai-center m5 fg-100" type="range" />
+					</div>
 				</div>
 			</div>
-			<div class="container fd-row fw-wrap jc-center ai-center m5">
+			<div class="container fd-row fw-wrap jc-center ai-center m5 fg-1">
 				<button id="generate-array" class="control-button fg-1" disabled>Generate Array</button>
 				<button class="control-button fg-1" id="sort-array" disabled>Sort</button>
 				<button class="control-button fg-1" id="stop-sorting" disabled>Stop</button>
 			</div>
-
+			<div id="bars-container" class="container fd-row jc-center">
+				<div id="bars" class="container jc-center ai-flex-end mt10"></div>
+			</div>
 		</div>
-		<div id="bars" class="container jc-center ai-flex-end mt10"></div>
 		<!--<script src="beep.js"></script>-->
 		<script src="cocktailShakerSort.js"></script>
 		<script src="bubbleSort.js"></script>
