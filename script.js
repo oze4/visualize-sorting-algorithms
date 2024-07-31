@@ -21,22 +21,10 @@ const BAR_COLORS = {
 };
 
 const AVAILABLE_SORTING_ALGORITHMS = {
-	"Merge Sort": {
-		sort: mergeSort,
-		render: renderMergeSort,
-	},
-	"Bubble Sort": {
-		sort: bubbleSort,
-		render: renderBubbleSort,
-	},
-	"Quick Sort": {
-		sort: quickSort,
-		render: renderQuickSort,
-	},
-	"Cocktail Shaker Sort": {
-		sort: cocktailShakerSort,
-		render: renderCocktailShakerSort,
-	},
+	"Merge Sort": mergeSort,
+	"Bubble Sort": bubbleSort,
+	"Quick Sort": quickSort,
+	"Shaker Sort": shakerSort,
 };
 
 /**
@@ -83,8 +71,8 @@ buttonSortArray.addEventListener("click", async (event) => {
 
 	// Get the algo that is selected.
 	const chosenSortingAlgo = AVAILABLE_SORTING_ALGORITHMS[selectAlgo.value];
-	ANIMATIONS = chosenSortingAlgo.sort(ARRAY);
-	await chosenSortingAlgo.render(ANIMATIONS);
+	ANIMATIONS = chosenSortingAlgo(ARRAY);
+	await renderAnimations(ANIMATIONS);
 
 	// Enable controls after sorting
 	buttonSortArray.disabled = false;
@@ -151,8 +139,15 @@ sliderSpeed.addEventListener("input", (event) => {
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
-function setBarWidth(arraySize) {
-	//if ()
+/**
+ * 
+ * @param {AlgoAnimation[]} animations 
+ */
+async function renderAnimations(animations) {
+	for (const animation of animations) {
+		const animator = new Animator(animation);
+		await animator.animate(divRenderBars, sliderSpeed.dataset.value);
+	}
 }
 
 function sleep(ms) {

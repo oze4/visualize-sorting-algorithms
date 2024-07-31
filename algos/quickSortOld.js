@@ -9,27 +9,23 @@ function* quickPartition(start, end) {
 
 	for (let j = start + 1; j <= end; j++) {
 		if (Number(ARRAY[j].dataset.value) < Number(pivotElement.dataset.value)) {
-			yield { type: "color", index: j, value: BAR_COLORS.compare };
-			yield { type: "color", index: left, value: BAR_COLORS.incorrect };
-			yield { type: "color", index: j, value: BAR_COLORS.incorrect };
+			yield new AlgoAnimation({ type: "colors", elements: [{ index: j, value: BAR_COLORS.compare }, { index: left, value: BAR_COLORS.incorrect }] });
+			yield new AlgoAnimation({ type: "color", index: j, value: BAR_COLORS.incorrect });
 			// swap
-			yield { type: "swap", leftIndex: left, rightIndex: j };
+			yield new AlgoAnimation({ type: "swap", indexes: [left, j] });
 			[ARRAY[left], ARRAY[j]] = [ARRAY[j], ARRAY[left]];
-			yield { type: "color", index: left, value: BAR_COLORS.incorrect };
-			yield { type: "color", index: j, value: BAR_COLORS.incorrect };
-			yield { type: "color", index: j, value: BAR_COLORS.default };
-			yield { type: "color", index: left, value: BAR_COLORS.default };
+			yield new AlgoAnimation({ type: "colors", elements: [{ index: left, value: BAR_COLORS.incorrect }, { index: j, value: BAR_COLORS.incorrect }] });
+			yield new AlgoAnimation({ type: "colors", elements: [{ index: j, value: BAR_COLORS.default }, { index: left, value: BAR_COLORS.default }] });
 			left++;
 		}
 	}
 
-	yield { type: "swap", leftIndex: start, rightIndex: left - 1 };
+	yield new AlgoAnimation({ type: "swap", indexes: [start, left-1] });
 	[ARRAY[start], ARRAY[left - 1]] = [ARRAY[left - 1], ARRAY[start]];
-	yield { type: "color", index: start, value: BAR_COLORS.incorrect };
-	yield { type: "color", index: left - 1, value: BAR_COLORS.incorrect };
+	yield new AlgoAnimation({ type: "colors", elements: [{ index: start, value: BAR_COLORS.incorrect }, { index: left-1, value: BAR_COLORS.incorrect }] });
 
 	for (let i = start; i <= left; i++) {
-		yield { type: "color", index: i, value: BAR_COLORS.correct };
+		yield new AlgoAnimation({ type: "color", index: i, value: BAR_COLORS.correct });
 	}
 
 	return left - 1;
@@ -41,8 +37,8 @@ function* sort(start, end) {
 		yield* sort(start, pivot - 1);
 		yield* sort(pivot + 1, end);
 		// done with these bars, color bars as completed
-		for (let i = 0; i <= end; i++) {
-			divRenderBars.childNodes[i].style.backgroundColor = BAR_COLORS.completed;
+		for (let i = start; i <= end; i++) {
+			yield new AlgoAnimation({ type: "color", value: BAR_COLORS.completed, index: i });
 		}
 	}
 }
