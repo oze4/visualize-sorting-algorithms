@@ -13,31 +13,31 @@ const MIN_SPEED = 1; // ms
 const MAX_SPEED = 1000; // ms
 const DEFAULT_SPEED = 1; // ms
 const BAR_COLORS = {
-  default: "black",
-  compare: "yellow",
-  correct: "green",
-  incorrect: "red",
-  completed: "blue"
-}
+	default: "black",
+	compare: "yellow",
+	correct: "green",
+	incorrect: "red",
+	completed: "blue",
+};
 
 const AVAILABLE_SORTING_ALGORITHMS = {
-  "Merge Sort": {
-    sort: mergeSort,
-    render: renderMergeSort,
-  },
-  "Bubble Sort": {
-    sort: bubbleSort,
-    render: renderBubbleSort
-  },
-  "Quick Sort": {
-    sort: quickSort,
-    render: renderQuickSort,
-  },
-  "Cocktail Shaker Sort": {
-    sort: cocktailShakerSort,
-    render: renderCocktailShakerSort,
-  }
-}
+	"Merge Sort": {
+		sort: mergeSort,
+		render: renderMergeSort,
+	},
+	"Bubble Sort": {
+		sort: bubbleSort,
+		render: renderBubbleSort,
+	},
+	"Quick Sort": {
+		sort: quickSort,
+		render: renderQuickSort,
+	},
+	"Cocktail Shaker Sort": {
+		sort: cocktailShakerSort,
+		render: renderCocktailShakerSort,
+	},
+};
 
 /**
  * Select necessary DOM elements.
@@ -56,16 +56,16 @@ const sliderSpeed = document.getElementById("algo-speed");
 sliderSpeed.min = MIN_SPEED;
 sliderSpeed.max = MAX_SPEED;
 sliderSpeed.dataset.value = DEFAULT_SPEED;
-sliderSpeed.value = MAX_SPEED-DEFAULT_SPEED;
+sliderSpeed.value = MAX_SPEED - DEFAULT_SPEED;
 
 // Add available algos to select
 for (const algo of Object.keys(AVAILABLE_SORTING_ALGORITHMS)) {
-  selectAlgo.add(new Option(algo, algo));
+	selectAlgo.add(new Option(algo, algo));
 }
 
 /**
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * EVENT HANDLERS  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ * EVENT HANDLERS  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
@@ -73,26 +73,26 @@ for (const algo of Object.keys(AVAILABLE_SORTING_ALGORITHMS)) {
  * Handle sort array button click.
  */
 buttonSortArray.addEventListener("click", async (event) => {
-  // Disable controls while sorting.
-  buttonSortArray.disabled = true;
-  buttonGenerateArray.disabled = true;
-  selectAlgo.disabled = true;
-  selectArraySize.disabled = true;
-  // Enable stop button while sorting
-  buttonStopSorting.disabled = false;
+	// Disable controls while sorting.
+	buttonSortArray.disabled = true;
+	buttonGenerateArray.disabled = true;
+	selectAlgo.disabled = true;
+	selectArraySize.disabled = true;
+	// Enable stop button while sorting
+	buttonStopSorting.disabled = false;
 
-  // Get the algo that is selected.
-  const chosenSortingAlgo = AVAILABLE_SORTING_ALGORITHMS[selectAlgo.value];
-  ANIMATIONS = chosenSortingAlgo.sort(ARRAY);
+	// Get the algo that is selected.
+	const chosenSortingAlgo = AVAILABLE_SORTING_ALGORITHMS[selectAlgo.value];
+	ANIMATIONS = chosenSortingAlgo.sort(ARRAY);
 	await chosenSortingAlgo.render(ANIMATIONS);
 
-  // Enable controls after sorting
-  buttonSortArray.disabled = false;
-  buttonGenerateArray.disabled = false;
-  selectAlgo.disabled = false;
-  selectArraySize.disabled = false;
-  // Disable stop button after sorting
-  buttonStopSorting.disabled = true;
+	// Enable controls after sorting
+	buttonSortArray.disabled = false;
+	buttonGenerateArray.disabled = false;
+	selectAlgo.disabled = false;
+	selectArraySize.disabled = false;
+	// Disable stop button after sorting
+	buttonStopSorting.disabled = true;
 });
 
 /**
@@ -100,16 +100,16 @@ buttonSortArray.addEventListener("click", async (event) => {
  * We replace ANIMATIONS with a fake generator.
  */
 buttonStopSorting.addEventListener("click", (event) => {
-  ANIMATIONS.return("stopped");
-  const e = new MouseEvent("click");
-  buttonGenerateArray.dispatchEvent(e);
+	ANIMATIONS.return("stopped");
+	const e = new MouseEvent("click");
+	buttonGenerateArray.dispatchEvent(e);
 });
 
 /**
  * Handle generate array button click.
  */
 buttonGenerateArray.addEventListener("click", async (event) => {
-  buttonSortArray.disabled = false;
+	buttonSortArray.disabled = false;
 	ARRAY = newUnsortedArray(parseInt(selectArraySize.value), (_, i) => newBar(i, ["bar"]));
 	await renderBars(ARRAY, divRenderBars);
 });
@@ -118,20 +118,20 @@ buttonGenerateArray.addEventListener("click", async (event) => {
  * Handle array size selection.
  */
 selectArraySize.addEventListener("change", (event) => {
-  buttonSortArray.disabled = true;
+	buttonSortArray.disabled = true;
 	if (selectAlgo.value) {
 		buttonGenerateArray.disabled = false;
 	}
-  divRenderBars.innerHTML = "";
-  buttonGenerateArray.click();
+	divRenderBars.innerHTML = "";
+	buttonGenerateArray.click();
 });
 
 /**
  * Handle algorithm selection.
  */
 selectAlgo.addEventListener("change", (event) => {
-  // If array is generated, enable sort button, else disable.
-  buttonSortArray.disabled = !(ARRAY.length);
+	// If array is generated, enable sort button, else disable.
+	buttonSortArray.disabled = !ARRAY.length;
 	if (selectArraySize.value) {
 		buttonGenerateArray.disabled = false;
 	}
@@ -140,19 +140,19 @@ selectAlgo.addEventListener("change", (event) => {
 /**
  * Handle delay slider change
  */
-sliderSpeed.addEventListener('input', (event) => {
-  const value = MAX_SPEED-(event.target.value)+1;
-  sliderSpeed.dataset.value = value
+sliderSpeed.addEventListener("input", (event) => {
+	const value = MAX_SPEED - event.target.value + 1;
+	sliderSpeed.dataset.value = value;
 });
 
 /**
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * FUNCTIONS - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ * FUNCTIONS - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
 function setBarWidth(arraySize) {
-  //if ()
+	//if ()
 }
 
 function sleep(ms) {
@@ -160,20 +160,20 @@ function sleep(ms) {
 }
 
 /**
- * 
- * @param {Number} index 
- * @param {DOMTokenList} classes 
+ *
+ * @param {Number} index
+ * @param {DOMTokenList} classes
  */
-function newBar(index, classes=[]) {
-  const bar = document.createElement("div");
-  const value = Math.random();
-  bar.dataset.value = value;
-  bar.dataset.index = index;
-  bar.id = `${index}-${value}`;
-  bar.style.backgroundColor = BAR_COLORS.default;
-  bar.style.height = `${value*100}%`;
-  bar.classList = classes;
-  return bar;
+function newBar(index, classes = []) {
+	const bar = document.createElement("div");
+	const value = Math.random();
+	bar.dataset.value = value;
+	bar.dataset.index = index;
+	bar.id = `${index}-${value}`;
+	bar.style.backgroundColor = BAR_COLORS.default;
+	bar.style.height = `${value * 100}%`;
+	bar.classList = classes;
+	return bar;
 }
 
 /**
@@ -181,18 +181,18 @@ function newBar(index, classes=[]) {
  * @param {HTMLElement[]} array : Array of Bar where each Bar.value is < 1.
  * @param {HTMLElement} appendToElement
  */
-function renderBars(array, appendToElement, sleepMS=0) {
+function renderBars(array, appendToElement, sleepMS = 0) {
 	return new Promise((resolve, reject) => {
 		if (!array.length) {
-      reject();
+			reject();
 		}
 
-    appendToElement.innerHTML = "";
-    for (let i = 0; i < array.length; i++) {
-      appendToElement.appendChild(array[i]);
-    }
-    
-    resolve();
+		appendToElement.innerHTML = "";
+		for (let i = 0; i < array.length; i++) {
+			appendToElement.appendChild(array[i]);
+		}
+
+		resolve();
 	});
 }
 
@@ -217,8 +217,8 @@ function shuffleArray(array) {
 	const LEN = array.length;
 	for (let i = 0; i < LEN; i++) {
 		const randomIndex = Math.floor(Math.random() * LEN);
-    array[i].dataset.index = randomIndex;
-    array[randomIndex].dataset.index = i;
+		array[i].dataset.index = randomIndex;
+		array[randomIndex].dataset.index = i;
 		[array[i], array[randomIndex]] = [array[randomIndex], array[i]];
 	}
 }
