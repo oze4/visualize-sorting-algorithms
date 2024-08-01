@@ -24,6 +24,7 @@ const AVAILABLE_SORTING_ALGORITHMS = {
 	"Bubble Sort": bubbleSort,
 	"Quick Sort": quickSort,
 	"Shaker Sort": shakerSort,
+	"Heap Sort (Max)": heapSort,
 };
 
 /**

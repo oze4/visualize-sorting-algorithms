@@ -17,6 +17,10 @@ class Animator {
 			return;
 		}
 
+		if (this.animation.sleepOverride) {
+			sleepTimeMilliseconds = this.animation.sleepOverride;
+		}
+
 		switch (this.animation.type) {
 			case "color": {
 				const { index, value } = this.animation;
@@ -26,7 +30,7 @@ class Animator {
 				await sleep(sleepTimeMilliseconds);
 				break;
 			}
-      
+
 			case "colors": {
 				for (let i = 0; i < this.animation.elements.length; i++) {
 					const { index, value } = this.animation.elements[i];
@@ -55,7 +59,7 @@ class Animator {
 			}
 
 			default: {
-				throw new Error(`[Animator.animate] animation type (${this.animation.type}) not found!`);
+				throw new Error(`[Animator.animate] animation type : "${this.animation.type}" : not found!`);
 			}
 		}
 	}
