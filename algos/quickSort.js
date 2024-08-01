@@ -6,6 +6,7 @@ function* partition(arr, start, end) {
 	const mid = Math.floor((start + end) / 2);
 	// select the pivot
 	let pivot = Number(arr[mid].dataset.value);
+	yield new AlgoAnimation({ type: "color", value: "magenta", index: mid });
 	// move pivot to end;
 	[arr[mid], arr[end]] = [arr[end], arr[mid]];
 	yield new AlgoAnimation({ type: "swap", indexes: [mid, end] });
@@ -16,6 +17,7 @@ function* partition(arr, start, end) {
 	let right = end - 1;
 
 	while (left <= right) {
+
 		yield new AlgoAnimation({
 			type: "colors",
 			elements: [

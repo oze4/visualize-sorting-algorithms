@@ -74,6 +74,10 @@ buttonSortArray.addEventListener("click", async (event) => {
 	ANIMATIONS = chosenSortingAlgo(ARRAY);
 	await renderAnimations(ANIMATIONS);
 
+	if (!isSorted(ARRAY)) {
+		alert("not sorted, something went wrong!");
+	}
+
 	// Enable controls after sorting
 	buttonSortArray.disabled = false;
 	buttonGenerateArray.disabled = false;
@@ -140,8 +144,21 @@ sliderSpeed.addEventListener("input", (event) => {
  */
 
 /**
- * 
- * @param {AlgoAnimation[]} animations 
+ *
+ * @param {HTMLElement[]} array We check the `dataset.value` attritube for a Number
+ */
+function isSorted(array) {
+	for (let i = 1; i < array.length; i++) {
+		if (Number(array[i - 1].dataset.value) > Number(array[i].dataset.value)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+/**
+ *
+ * @param {AlgoAnimation[]} animations
  */
 async function renderAnimations(animations) {
 	for (const animation of animations) {
@@ -150,6 +167,10 @@ async function renderAnimations(animations) {
 	}
 }
 
+/**
+ *
+ * @param {Number} ms : time to sleep in milliseconds
+ */
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }

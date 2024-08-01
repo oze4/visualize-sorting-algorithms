@@ -101,6 +101,10 @@ body {
 	height: 50px;
 }
 
+.hidden-on-mobile {
+	display: block;
+}
+
 /**
  * CSS BY TAG
  */
@@ -164,5 +168,11 @@ input[type="range"] {
 	}
 	.control-button {
 		height: 25px;
+	}
+}
+
+@media screen and (max-width: 686px) {
+	.hidden-on-mobile {
+		display: none;
 	}
 }
