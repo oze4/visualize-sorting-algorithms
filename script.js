@@ -4,14 +4,13 @@
 
 // Global arrays to hold elements and generators (animations).
 let ARRAY = [];
-/**
- * @type {Generator[]}
- */
 let ANIMATIONS = [];
+let MANUAL_STOP = false; // If stop button was pressed
 
 const MIN_SPEED = 1; // ms
 const MAX_SPEED = 1000; // ms
 const DEFAULT_SPEED = 1; // ms
+
 const BAR_COLORS = {
 	default: "black",
 	compare: "yellow",
@@ -73,8 +72,8 @@ buttonSortArray.addEventListener("click", async (event) => {
 	const chosenSortingAlgo = AVAILABLE_SORTING_ALGORITHMS[selectAlgo.value];
 	ANIMATIONS = chosenSortingAlgo(ARRAY);
 	await renderAnimations(ANIMATIONS);
-
-	if (!isSorted(ARRAY)) {
+	// Verify we are sorted only if we were not manually interrupted.
+	if (!MANUAL_STOP && !isSorted(ARRAY)) {
 		alert("not sorted, something went wrong!");
 	}
 
@@ -85,6 +84,9 @@ buttonSortArray.addEventListener("click", async (event) => {
 	selectArraySize.disabled = false;
 	// Disable stop button after sorting
 	buttonStopSorting.disabled = true;
+
+	// Reset manual stop "flag".
+	MANUAL_STOP = false;
 });
 
 /**
@@ -92,6 +94,7 @@ buttonSortArray.addEventListener("click", async (event) => {
  * We replace ANIMATIONS with a fake generator.
  */
 buttonStopSorting.addEventListener("click", (event) => {
+	MANUAL_STOP = true;
 	ANIMATIONS.return("stopped");
 	const e = new MouseEvent("click");
 	buttonGenerateArray.dispatchEvent(e);
@@ -126,6 +129,7 @@ selectAlgo.addEventListener("change", (event) => {
 	buttonSortArray.disabled = !ARRAY.length;
 	if (selectArraySize.value) {
 		buttonGenerateArray.disabled = false;
+		buttonGenerateArray.click();
 	}
 });
 
