@@ -17,7 +17,6 @@ function* partition(arr, start, end) {
 	let right = end - 1;
 
 	while (left <= right) {
-
 		yield new AlgoAnimation({
 			type: "colors",
 			elements: [
