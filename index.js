@@ -25,6 +25,7 @@ const AVAILABLE_SORTING_ALGORITHMS = {
 	"Quick Sort": quickSort,
 	"Shaker Sort": shakerSort,
 	"Heap Sort (Max)": maxHeapSort,
+	"Heap Sort (Min)": minHeapSort,
 };
 
 /**
@@ -153,11 +154,24 @@ sliderSpeed.addEventListener("input", (event) => {
  * @param {HTMLElement[]} array We check the `dataset.value` attritube for a Number
  */
 function isSorted(array) {
+	let sorted = true;
 	for (let i = 1; i < array.length; i++) {
 		if (Number(array[i - 1].dataset.value) > Number(array[i].dataset.value)) {
-			return false;
+			sorted = false;
+			break;
 		}
 	}
+
+	// Since we may have some arrays sorted from largest to smallest (min heap sort),
+	// check if we are sorted in small-> large before returning.
+	if (!sorted) {
+		for (let i = array.length-1; i > 0; i--) {
+			if (Number(array[i].dataset.value) > Number(array[i-1].dataset.value)) {
+				return false;
+			}
+		}
+	}
+
 	return true;
 }
 
@@ -167,7 +181,7 @@ function isSorted(array) {
  */
 async function renderAnimations(animations) {
 	for (const animation of animations) {
-		console.log(animation)
+		
 		const animator = new Animator(animation);
 		await animator.animate(divRenderBars, sliderSpeed.dataset.value);
 	}

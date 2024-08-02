@@ -8,37 +8,27 @@ class AlgoAnimation {
 		this.index = animation.index;
 		this.indexes = animation.indexes;
 		this.elements = animation.elements;
-		this._sleepOverride = animation.sleepOverride;
+		this.sleepTime = animation.sleepOverride;
 	}
 
 	static color(index, value) {
-		this.type = "color";
-		this.index = index;
-		this.value = value;
-		return this;
+		return new AlgoAnimation({ type: "color", index, value });
 	}
 
 	static colors(elements = [{ index: null, value: null }]) {
-		this.type = "colors";
-		this.elements = elements;
-		return this;
+		return new AlgoAnimation({ type: "colors", elements });
 	}
 
 	static height(index, value) {
-		this.type = "height";
-		this.index = index;
-		this.value = value;
-		return this;
+		return new AlgoAnimation({ type: "height", index, value });
 	}
 
 	static swap(indexA, indexB) {
-		this.type = "swap";
-		this.indexes = [indexA, indexB];
-		return this;
+		return new AlgoAnimation({ type: "swap", indexes: [indexA, indexB] });
 	}
 
-	static sleepOverride(ms) {
-		this._sleepOverride = ms;
+	sleepOverride(ms) {
+		this.sleepTime = ms;
 		return this;
 	}
 }
@@ -65,8 +55,8 @@ class Animator {
 			return;
 		}
 
-		if (this.animation._sleepOverride !== null) {
-			sleepTimeMilliseconds = this.animation._sleepOverride;
+		if (this.animation.sleepTime !== undefined) {
+			sleepTimeMilliseconds = this.animation.sleepTime;
 		}
 
 		switch (this.animation.type) {
