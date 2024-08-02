@@ -24,7 +24,7 @@ const AVAILABLE_SORTING_ALGORITHMS = {
 	"Bubble Sort": bubbleSort,
 	"Quick Sort": quickSort,
 	"Shaker Sort": shakerSort,
-	"Heap Sort (Max)": heapSort,
+	"Heap Sort (Max)": maxHeapSort,
 };
 
 /**
@@ -167,6 +167,7 @@ function isSorted(array) {
  */
 async function renderAnimations(animations) {
 	for (const animation of animations) {
+		console.log(animation)
 		const animator = new Animator(animation);
 		await animator.animate(divRenderBars, sliderSpeed.dataset.value);
 	}

@@ -1,3 +1,6 @@
+/**
+ * ALGOANIMATION
+ */
 class AlgoAnimation {
 	constructor(animation = { type: "", value: null, index: null, indexes: [], elements: [], sleepOverride: null }) {
 		this.type = animation.type;
@@ -5,13 +8,46 @@ class AlgoAnimation {
 		this.index = animation.index;
 		this.indexes = animation.indexes;
 		this.elements = animation.elements;
-		this.sleepOverride = animation.sleepOverride;
+		this._sleepOverride = animation.sleepOverride;
+	}
+
+	static color(index, value) {
+		this.type = "color";
+		this.index = index;
+		this.value = value;
+		return this;
+	}
+
+	static colors(elements = [{ index: null, value: null }]) {
+		this.type = "colors";
+		this.elements = elements;
+		return this;
+	}
+
+	static height(index, value) {
+		this.type = "height";
+		this.index = index;
+		this.value = value;
+		return this;
+	}
+
+	static swap(indexA, indexB) {
+		this.type = "swap";
+		this.indexes = [indexA, indexB];
+		return this;
+	}
+
+	static sleepOverride(ms) {
+		this._sleepOverride = ms;
+		return this;
 	}
 }
 
+/**
+ * ANIMATOR
+ */
 class Animator {
 	/**
-	 *
 	 * @param {AlgoAnimation} animation
 	 */
 	constructor(animation) {
@@ -19,7 +55,8 @@ class Animator {
 	}
 
 	/**
-	 *
+	 * Animates an AlgoAnimation
+	 * - Expects each div where our array is rendered to contain a `data-value` attribute.
 	 * @param {HTMLDivElement} divWhereArrayIsRendered
 	 * @param {Number} sleepTimeMilliseconds
 	 */
@@ -28,8 +65,8 @@ class Animator {
 			return;
 		}
 
-		if (this.animation.sleepOverride) {
-			sleepTimeMilliseconds = this.animation.sleepOverride;
+		if (this.animation._sleepOverride !== null) {
+			sleepTimeMilliseconds = this.animation._sleepOverride;
 		}
 
 		switch (this.animation.type) {
@@ -70,7 +107,7 @@ class Animator {
 			}
 
 			default: {
-				throw new Error(`[Animator.animate] animation type : "${this.animation.type}" : not found!`);
+				console.error(`[Animator.animate] animation type : "${this.animation.type}" : not found!`, this.animation);
 			}
 		}
 	}

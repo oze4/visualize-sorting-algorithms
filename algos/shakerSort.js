@@ -9,20 +9,29 @@ function* shakerSort(array) {
 		isSwap = false;
 
 		for (let i = 0 + loops; i < array.length - 1 - loops; i++) {
-			yield new AlgoAnimation({ type: "colors", elements: [{ index: i, value: BAR_COLORS.compare }, { index: i + 1, value: BAR_COLORS.compare }] });
-			
+			yield AlgoAnimation.colors([
+				{ index: i, value: BAR_COLORS.compare },
+				{ index: i + 1, value: BAR_COLORS.compare },
+			]);
+
 			if (Number(array[i].dataset.value) > Number(array[i + 1].dataset.value)) {
-				yield new AlgoAnimation({ type: "colors", elements: [{ index: i, value: BAR_COLORS.incorrect }, { index: i + 1, value: BAR_COLORS.incorrect }] });
-				yield new AlgoAnimation({ type: "swap", indexes: [i, i+1] });
-				[array[i], array[i + 1]] = [array[i + 1], array[i]];
+				yield AlgoAnimation.colors([
+					{ index: i, value: BAR_COLORS.incorrect },
+					{ index: i + 1, value: BAR_COLORS.incorrect },
+				]);
+				yield AlgoAnimation.swap(i, i + 1);
+				swap(array, i, i + 1);
 				isSwap = true;
 			}
 
-			yield new AlgoAnimation({ type: "colors", elements: [{ index: i, value: BAR_COLORS.default }, { index: i + 1, value: BAR_COLORS.correct }] });
+			yield AlgoAnimation.colors([
+				{ index: i, value: BAR_COLORS.default },
+				{ index: i + 1, value: BAR_COLORS.correct },
+			]);
 		}
 
 		// "Last" element is now in correct position.
-		yield new AlgoAnimation({ type: "color", index: array.length - 1 - loops, value: BAR_COLORS.completed });
+		yield AlgoAnimation.color(array.length - 1 - loops, BAR_COLORS.completed);
 
 		// If nothing was swapped we know we are sorted and can break early.
 		if (!isSwap) {
@@ -31,25 +40,34 @@ function* shakerSort(array) {
 
 		isSwap = false;
 		for (let i = array.length - 2 - loops; i > 0 + loops; i--) {
-			yield new AlgoAnimation({ type: "colors", elements: [{ index: i, value: BAR_COLORS.compare }, { index: i - 1, value: BAR_COLORS.compare }] });
+			yield AlgoAnimation.colors([
+				{ index: i, value: BAR_COLORS.compare },
+				{ index: i - 1, value: BAR_COLORS.compare },
+			]);
 
 			if (Number(array[i].dataset.value) < Number(array[i - 1].dataset.value)) {
-				yield new AlgoAnimation({ type: "colors", elements: [{ index: i, value: BAR_COLORS.compare }, { index: i - 1, value: BAR_COLORS.compare }] });
-				yield new AlgoAnimation({ type: "swap", indexes: [i, i-1] });
-				[array[i], array[i - 1]] = [array[i - 1], array[i]];
+				yield AlgoAnimation.colors([
+					{ index: i, value: BAR_COLORS.incorrect },
+					{ index: i - 1, value: BAR_COLORS.incorrect },
+				]);
+				yield AlgoAnimation.swap(i, i - 1);
+				swap(array, i, i - 1);
 				isSwap = true;
 			}
 
-			yield new AlgoAnimation({ type: "colors", elements: [{ index: i, value: BAR_COLORS.default }, { index: i - 1, value: BAR_COLORS.correct }] });
+			yield AlgoAnimation.colors([
+				{ index: i, value: BAR_COLORS.default },
+				{ index: i - 1, value: BAR_COLORS.correct },
+			]);
 		}
 
 		// "First" element is now in correct position.
-		yield new AlgoAnimation({ type: "color", index: 0 + loops, value: BAR_COLORS.completed });
+		yield AlgoAnimation.color(loops, BAR_COLORS.completed);
 		loops++;
 	}
 
 	// Mark remaining as completed
 	for (let i = loops; i < array.length - loops; i++) {
-		yield new AlgoAnimation({ type: "color", index: i, value: BAR_COLORS.completed });
+		yield AlgoAnimation.color(i, BAR_COLORS.completed);
 	}
 }
