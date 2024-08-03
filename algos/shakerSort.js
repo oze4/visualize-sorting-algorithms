@@ -1,4 +1,4 @@
-function* shakerSort(array) {
+functions* shakerSort(array) {
 	let isSwap = true;
 	// Since each iteration will produce the largest and smallest elements,
 	// we can  keep track of how many loops we have completed as to not process
@@ -8,7 +8,7 @@ function* shakerSort(array) {
 	while (isSwap) {
 		isSwap = false;
 
-		for (let i = 0 + loops; i < array.length - 1 - loops; i++) {
+		for (let i = loops; i < array.length - 1 - loops; i++) {
 			yield AlgoAnimation.colors([
 				{ index: i, value: BAR_COLORS.compare },
 				{ index: i + 1, value: BAR_COLORS.compare },
