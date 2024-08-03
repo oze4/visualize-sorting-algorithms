@@ -144,13 +144,14 @@ input[type="range"] {
 }
 
 #bars {
-	height: 95%;
+	height: 99%;
 	width: 90%;
 }
 
 #bars-container {
 	height: 100%;
 	width: 100%;
+	margin-bottom: 10px;
 }
 
 #container {
@@ -172,7 +173,7 @@ input[type="range"] {
 	}
 }
 
-@media screen and (max-width: 686px) {
+@media screen and (max-width: 900px) {
 	.hidden-on-mobile {
 		display: none;
 	}
