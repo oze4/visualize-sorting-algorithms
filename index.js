@@ -17,6 +17,7 @@ const BAR_COLORS = {
 	correct: "green",
 	incorrect: "red",
 	completed: "blue",
+	pending: "darkgray", // pending confirmation
 };
 
 const AVAILABLE_SORTING_ALGORITHMS = {
@@ -165,8 +166,8 @@ function isSorted(array) {
 	// Since we may have some arrays sorted from largest to smallest (min heap sort),
 	// check if we are sorted in small-> large before returning.
 	if (!sorted) {
-		for (let i = array.length-1; i > 0; i--) {
-			if (Number(array[i].dataset.value) > Number(array[i-1].dataset.value)) {
+		for (let i = array.length - 1; i > 0; i--) {
+			if (Number(array[i].dataset.value) > Number(array[i - 1].dataset.value)) {
 				return false;
 			}
 		}
@@ -181,7 +182,6 @@ function isSorted(array) {
  */
 async function renderAnimations(animations) {
 	for (const animation of animations) {
-		
 		const animator = new Animator(animation);
 		await animator.animate(divRenderBars, sliderSpeed.dataset.value);
 	}

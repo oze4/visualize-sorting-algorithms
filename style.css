@@ -4,6 +4,7 @@ body {
 	width: 100%;
 	padding: 0;
 	margin: 0;
+	background-color: rgb(218, 217, 217);
 }
 
 .container {
@@ -94,6 +95,7 @@ body {
 	width: 10vw;
 	background-color: black;
 	margin: 1px;
+	border: 1px solid black;
 }
 
 .control-button {
