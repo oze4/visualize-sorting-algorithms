@@ -8,7 +8,7 @@ function* bubbleSort(array = []) {
 				{ index: j + 1, value: BAR_COLORS.compare },
 			]);
 
-			if (array[j].dataset.value > array[j + 1].dataset.value) {
+			if (Number(array[j].dataset.value) > Number(array[j + 1].dataset.value)) {
 				yield AlgoAnimation.colors([
 					{ index: j, value: BAR_COLORS.correct },
 					{ index: j + 1, value: BAR_COLORS.incorrect },

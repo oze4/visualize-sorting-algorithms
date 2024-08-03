@@ -108,7 +108,14 @@ buttonStopSorting.addEventListener("click", (event) => {
  */
 buttonGenerateArray.addEventListener("click", async (event) => {
 	buttonSortArray.disabled = false;
-	ARRAY = newUnsortedArray(parseInt(selectArraySize.value), (_, i) => newBar(i, ["bar"]));
+	const size = parseInt(selectArraySize.value);
+	ARRAY = newUnsortedArray(size, (_, i) => {
+		let val = ((i+1)/size)*100;
+		if (size > 100) {
+			val = val + (i / size);
+		}
+		return newBar({ index: i, classes: ["bar"], defaultValue: val })
+	});
 	await renderBars(ARRAY, divRenderBars);
 });
 
@@ -200,14 +207,20 @@ function sleep(ms) {
  * @param {Number} index
  * @param {DOMTokenList} classes
  */
-function newBar(index, classes = []) {
+function newBar({index, classes = [], defaultValue = null} = {}) {
 	const bar = document.createElement("div");
-	const value = Math.random();
-	bar.dataset.value = value;
+
+	let height = `${defaultValue}%`;
+	if (defaultValue === undefined || defaultValue === null) {
+		defaultValue = Math.random()
+		height = `${defaultValue * (divRenderBars.offsetHeight)}px`
+	}
+
+	bar.dataset.value = defaultValue;
 	bar.dataset.index = index;
-	bar.id = `${index}-${value}`;
+	bar.id = `${index}-${defaultValue}`;
 	bar.style.backgroundColor = BAR_COLORS.default;
-	bar.style.height = `${value * 100}%`;
+	bar.style.height = height;
 	bar.classList = classes;
 	return bar;
 }

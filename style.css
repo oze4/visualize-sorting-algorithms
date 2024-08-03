@@ -95,7 +95,6 @@ body {
 	width: 10vw;
 	background-color: black;
 	margin: 1px;
-	border: 1px solid black;
 }
 
 .control-button {
@@ -145,7 +144,7 @@ input[type="range"] {
 }
 
 #bars {
-	height: 90%;
+	height: 95%;
 	width: 90%;
 }
 
