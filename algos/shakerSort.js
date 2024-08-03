@@ -1,4 +1,4 @@
-functions* shakerSort(array) {
+function* shakerSort(array) {
 	let isSwap = true;
 	// Since each iteration will produce the largest and smallest elements,
 	// we can  keep track of how many loops we have completed as to not process
