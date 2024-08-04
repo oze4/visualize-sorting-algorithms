@@ -21,8 +21,12 @@
 				</div>
 			</div>
 			<div id="options" class="container fd-row jc-center fw-wrap ai-center m5">
-				<select id="array-size" class="fg-1">
+				<select id="sorting-algo" class="fg-1 control-button ta-center">
+					<option selected disabled value>Sorting Algorithm</option>
+				</select>
+				<select id="array-size" class="control-button ta-center fg-1">
 					<option selected disabled value>Array Size</option>
+					<optgroup id="recommended-array-sizes" hidden label="Recommended"></optgroup>
 					<option value="10">10</option>
 					<option value="20">20</option>
 					<option value="30">30</option>
@@ -32,9 +36,6 @@
 					<option class="hidden-on-mobile" value="150">150</option>
 					<option class="hidden-on-mobile" value="200">200</option>
 					<option class="hidden-on-mobile" value="250">250</option>
-				</select>
-				<select id="sorting-algo" class="fg-1">
-					<option selected disabled value>Sorting Algorithm</option>
 				</select>
 				<div id="slider-container" class="container ai-center ta-center fd-col fg-1">
 					<label for="algo-speed">Speed</label>
@@ -48,8 +49,8 @@
 				<button class="control-button fg-1" id="sort-array" disabled>Sort</button>
 				<button class="control-button fg-1" id="stop-sorting" disabled>Stop</button>
 			</div>
-			<div id="bars-container" class="container fd-row jc-center">
-				<div id="bars" class="container jc-center ai-flex-end mt10"></div>
+			<div id="bars-container" class="container fd-row jc-center ai-flex-end">
+				<div id="bars" class="flex as-center jc-space-even ai-flex-end"> <!-- class="container jc-center ai-flex-end mt10"--></div>
 			</div>
 		</div>
 		<!--<script src="beep.js"></script>-->

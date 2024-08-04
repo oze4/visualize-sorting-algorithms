@@ -15,3 +15,4 @@ We [mostly] follow this color convention:
 - Correct position colored `green`.
 - Incorrect position colored `red`.
 - Completed colored `blue`.
+- Algorithm specific items (for example, the pivot in quick sort) are colored `cyan`.

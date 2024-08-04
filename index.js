@@ -20,13 +20,31 @@ const BAR_COLORS = {
 	pending: "darkgray", // pending confirmation
 };
 
-const AVAILABLE_SORTING_ALGORITHMS = {
-	"Merge Sort": mergeSort,
-	"Bubble Sort": bubbleSort,
-	"Quick Sort": quickSort,
-	"Shaker Sort": shakerSort,
-	"Heap Sort (Max)": maxHeapSort,
-	"Heap Sort (Min)": minHeapSort,
+const SORTING_ALGOS = {
+	"Merge Sort": {
+		sort: mergeSort,
+		recommendedArraySizes: [100, 250],
+	},
+	"Bubble Sort": {
+		sort: bubbleSort,
+		recommendedArraySizes: [20, 30],
+	},
+	"Quick Sort": {
+		sort: quickSort,
+		recommendedArraySizes: [100, 250],
+	},
+	"Shaker Sort": {
+		sort: shakerSort,
+		recommendedArraySizes: [20, 30],
+	},
+	"Heap Sort (Max)": {
+		sort: maxHeapSort,
+		recommendedArraySizes: [100, 250],
+	},
+	"Heap Sort (Min)": {
+		sort: minHeapSort,
+		recommendedArraySizes: [100, 250],
+	},
 };
 
 /**
@@ -49,7 +67,7 @@ sliderSpeed.dataset.value = DEFAULT_SPEED;
 sliderSpeed.value = MAX_SPEED - DEFAULT_SPEED;
 
 // Add available algos to select
-for (const algo of Object.keys(AVAILABLE_SORTING_ALGORITHMS)) {
+for (const algo of Object.keys(SORTING_ALGOS)) {
 	selectAlgo.add(new Option(algo, algo));
 }
 
@@ -72,8 +90,8 @@ buttonSortArray.addEventListener("click", async (event) => {
 	buttonStopSorting.disabled = false;
 
 	// Get the algo that is selected.
-	const chosenSortingAlgo = AVAILABLE_SORTING_ALGORITHMS[selectAlgo.value];
-	ANIMATIONS = chosenSortingAlgo(ARRAY);
+	const chosenSortingAlgo = SORTING_ALGOS[selectAlgo.value];
+	ANIMATIONS = chosenSortingAlgo.sort(ARRAY);
 	await renderAnimations(ANIMATIONS);
 	// Verify we are sorted only if we were not manually interrupted.
 	if (!MANUAL_STOP && !isSorted(ARRAY)) {
@@ -110,11 +128,11 @@ buttonGenerateArray.addEventListener("click", async (event) => {
 	buttonSortArray.disabled = false;
 	const size = parseInt(selectArraySize.value);
 	ARRAY = newUnsortedArray(size, (_, i) => {
-		let val = ((i+1)/size)*100;
+		let val = ((i + 1) / size) * 100;
 		if (size > 100) {
-			val = val + (i / size);
+			val = val + i / size;
 		}
-		return newBar({ index: i, classes: ["bar"], defaultValue: val })
+		return newBar({ index: i, classes: ["bar"], defaultValue: val });
 	});
 	await renderBars(ARRAY, divRenderBars);
 });
@@ -135,6 +153,30 @@ selectArraySize.addEventListener("change", (event) => {
  * Handle algorithm selection.
  */
 selectAlgo.addEventListener("change", (event) => {
+	/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	 * - - - - - - - - - - - - TODO : CLEAN THIS UP - - - - - - - - - - - - - - - - - - - -
+	 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+	// Clear recommended sizes and add new ones.
+	const optGroup = selectArraySize.querySelector("#recommended-array-sizes");
+	const chosenAlgo = SORTING_ALGOS[selectAlgo.value];
+	optGroup.replaceChildren();
+	selectArraySize.value = chosenAlgo.recommendedArraySizes[0] || "";
+	if (!chosenAlgo.recommendedArraySizes.length) {
+		optGroup.hidden = true;
+	} else {
+		for (let i = 0; i < chosenAlgo.recommendedArraySizes.length; i++) {
+			const val = chosenAlgo.recommendedArraySizes[i];
+			const option = new Option(val, val);
+			console.log(val, option);
+			optGroup.appendChild(option);
+		}
+		optGroup.appendChild(document.createElement("hr"));
+		optGroup.hidden = false;
+	}
+	/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --
+	 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
 	// If array is generated, enable sort button, else disable.
 	buttonSortArray.disabled = !ARRAY.length;
 	if (selectArraySize.value) {
@@ -207,13 +249,13 @@ function sleep(ms) {
  * @param {Number} index
  * @param {DOMTokenList} classes
  */
-function newBar({index, classes = [], defaultValue = null} = {}) {
+function newBar({ index, classes = [], defaultValue = null } = {}) {
 	const bar = document.createElement("div");
 
 	let height = `${defaultValue}%`;
 	if (defaultValue === undefined || defaultValue === null) {
-		defaultValue = Math.random()
-		height = `${defaultValue * (divRenderBars.offsetHeight)}px`
+		defaultValue = Math.random();
+		height = `${defaultValue * divRenderBars.offsetHeight}px`;
 	}
 
 	bar.dataset.value = defaultValue;
