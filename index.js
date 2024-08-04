@@ -167,6 +167,9 @@ selectAlgo.addEventListener("change", (event) => {
 		for (let i = 0; i < chosenAlgo.recommendedArraySizes.length; i++) {
 			const val = chosenAlgo.recommendedArraySizes[i];
 			const option = new Option(val, val);
+			if (val > 100) { // If val is greater than 100, hide it on mobile.
+				option.classList.add("hidden-on-mobile");
+			}
 			console.log(val, option);
 			optGroup.appendChild(option);
 		}
