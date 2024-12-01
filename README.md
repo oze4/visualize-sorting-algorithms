@@ -1,6 +1,6 @@
 # Visualize Sorting Algorithms in JavaScript!
 
-Check out a [live demo here](https://oze4.github.io/visualize-sorting-algorithms/)!
+Check out a [live demo here](https://matthewoestreich.github.io/visualize-sorting-algorithms/)!
 
 ### About
 
